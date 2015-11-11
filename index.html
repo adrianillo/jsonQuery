@@ -1,0 +1,464 @@
+<html>
+
+<head>
+	<script src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/jsonQuery.js"></script>
+	<script src="prism/prism.js"></script>	
+	<link rel="stylesheet" href="prism/prism.css">
+	<link rel="stylesheet" href="css/jsonQuery.css">
+	<script>
+		
+		$( document ).ready(function() {
+   
+	
+			// simple data
+				var users = [
+				{ 'user': 'jon',  'age': 40, 'active': true , 'nSon':10},
+				{ 'user': 'susan',    'age': 40, 'active': false , 'nSon':5},
+				{ 'user': 'james', 'age': 1,  'active': true, 'nSon':8 }
+				];
+				
+				//initialize object
+				var jq=new jsonQuery(users);
+	
+		
+				//simple where, filter json
+				var re=jq.where({major:{'age':'20','nSon':7},
+					equal:{'active':true}				
+					});
+				
+				$('#contentResult1').html(JSON.stringify(re), null, "\t");
+				
+				//where, filter json
+				var re1=jq.where({
+					major:{'age':'0','nSon':4},
+					equal:{'active':true},
+					minor:{'nSon':40},
+					majorOrEqual:{'nSon':10},
+					minorOrEqual:{'nSon':40},
+									
+					});
+					
+					$('#contentResult2').html(JSON.stringify(re1, null, "\t"));
+					
+					//add data to json if not exist
+					var re2=jq.extendData({ 'user': 'carol',  'age': 40, 'active': true , 'nSon':10},users);
+					
+					$('#contentResult3').html(JSON.stringify(re2, null, "\t"));
+					
+					//add data to json if not exist
+					var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
+					
+					$('#contentResult4').html(JSON.stringify(re2_2, null, "\t"));
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var re3=jq.whereOr(
+						{
+						major:{'age':'20','nSon':7},
+						equal:{'active':true}				
+					});
+					
+					$('#contentResult5').html(JSON.stringify(re3, null, "\t"));
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var re4=jq.whereOr({major:{'age':'39','nSon':10},
+					equal:{'user':'fred'}				
+					});
+					
+					$('#contentResult6').html(JSON.stringify(re4, null, "\t"));
+					
+					//Select object from json
+					var re5=jq.select(['user','sSon']);
+					
+					$('#contentResult7').html(JSON.stringify(re5, null, "\t"));
+					
+					
+					//Select object from json
+					var re6=jq.where({
+					major:{'age':'0','nSon':4},
+					equal:{'active':true},
+					minor:{'nSon':40},
+					majorOrEqual:{'nSon':10},
+					minorOrEqual:{'nSon':40},								
+					}).select(['user','age']);
+					
+					$('#contentResult8').html(JSON.stringify(re6, null, "\t"));
+					
+					
+					//complex data
+					
+					var users2 = [
+							{ "user": { "id": 100, "alias": "carol" }, "text": "good moring",name:"carol", age:20 },
+							{ "user": { "id": 130, "alias": "jon" }, "text": "bay bay",name:"jon" , age:20},
+							{ "user": { "id": 155, "alias": "maria" }, "text": "see you",name:"maria" , age:30},
+							{ "user": { "id": 301, "alias": "lucas" }, "text": "helloo ..." ,name:"lucas", age:10}
+						];
+					
+				
+				//initialize object
+				var jq2=new jsonQuery(users2);
+				
+				//Select object from json	
+				var rec1=jq2.select(['user','sSon']);
+				//Select object from json
+				var rec2=jq2.select(['user','name']);
+				$('#contentResult9').html(JSON.stringify(rec2, null, "\t"));
+				
+				//where, filter json
+				var rec3=jq2.where({equal:{'age':'20'}});				
+				
+				//where, filter json	  
+				var rec4=jq2.where({equal:{'age':'20'}});
+				
+				//where, filter json
+				var rec5=jq2.where({equal:{'user':{"id":100}}});			  
+				
+				//where, filter json
+				var rec6=jq2.where({
+					major:{'user':{"id":100}},
+					minor:{'user':{"id":300}, age:21},				  
+					});
+					
+					$('#contentResult10').html(JSON.stringify(rec6, null, "\t"));
+				
+					var users3 = [
+							{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia'} }, "text": "hello" ,name:"sofia", age:10},
+							{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon'} }, "text": "bay bay",name:"jon", age:22 },
+							{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+							{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+							{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+						];
+				//initialize object		
+				var jq3=new jsonQuery(users3);
+				
+				//where, filter json
+				var rec7=jq3.where({
+					major:{'user':{"id":100}},
+					minor:{'user':{"id":300,spouse:{age:40}}, age:21},				  
+					});
+				//where, filter json
+					
+				var rec8=jq3.where({
+					major:{'user':{"id":100}},
+					minor:{'user':{"id":300,spouse:{age:40}}, age:21},
+					equal:{'user':{spouse:{name:'sofia'}}},				  
+					});
+					$('#contentResult11').html(JSON.stringify(rec8, null, "\t"));
+				//where, filter json
+				var rec9=jq3.where({ 
+					major:{'user':{"id":100}},
+					minor:{user:{id:300,spouse:{age:60}}, age:21},				  
+					});
+					
+				//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var rec10=jq3.whereOr({ 
+					major:{'user':{"id":100}},
+					minor:{user:{"id":31,spouse:{age:110}}, age:30},				  
+					});
+					
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var rec11= jq3.whereOr({ 
+					major:{'user':{"id":101}},
+					minor:{user:{id:31,spouse:{age:91}}, age:20},				  
+					});
+					
+					$('#contentResult12').html(JSON.stringify(rec11, null, "\t"));
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var rec12= jq3.whereOr({ 
+					major:{'user':{"id":101}},
+					minor:{user:{id:31,spouse:{age:91}}, age:20},				  
+					});
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var rec13= jq3.whereOr({ 
+					major:{'user':{"id":101}},
+					minor:{user:{id:31,spouse:{age:92}}, age:20},				  
+					});
+					
+					//whereOr each condition is evaluated as "or" to the following condition , filter json
+					var rec14= jq3.whereOr({ 
+					major:{'user':{"id":101}},
+					minor:{user:{id:31,spouse:{age:93}}, age:20},				  
+					});
+					
+					
+				  });
+	</script>
+
+</head>
+
+<body>
+	<div class="title">Exemples jsonQuery </div>
+	<span class="subTitle">We start from the following json:</span>
+	<pre>		
+		<code class="language-javascript">		
+				var users = [
+					{ 'user': 'jon',  'age': 40, 'active': true , 'nSon':10},
+					{ 'user': 'susan',    'age': 40, 'active': false , 'nSon':5},
+					{ 'user': 'james', 'age': 1,  'active': true, 'nSon':8 }
+					];		
+		</code>
+		</pre>		
+		<span class="subTitle">Initialize object:</span>
+		<pre>		
+		<code class="language-javascript">
+			var jq=new jsonQuery(users);
+		</code>
+		</pre>
+		
+		<span class="subTitle">1&#176; example. Simple where query to filter json:</span>
+		<pre>		
+		<code class="language-javascript">			
+			var re=jq.where({major:{'age':'20','nSon':7},
+				equal:{'active':true}				
+				});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult1"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		<span class="subTitle">2&#176; example. Where query to filter json:</span>
+		<pre>		
+		<code class="language-javascript">			
+			var re1=jq.where({
+					major:{'age':'0','nSon':4},
+					equal:{'active':true},
+					minor:{'nSon':40},
+					majorOrEqual:{'nSon':10},
+					minorOrEqual:{'nSon':40},
+									
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult2"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		<span class="subTitle">3&#176; example. add data to json if not exist:</span>
+		<pre>		
+		<code class="language-javascript">
+				var re2=jq.extendData({ 'user': 'carol',  'age': 40, 'active': true , 'nSon':10},users);
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult3"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		
+		<span class="subTitle">4&#176; example. add data to json if not exist:</span>
+		<pre>		
+		<code class="language-javascript">					
+			var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult4"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		
+		<span class="subTitle">5&#176; example. whereOr each condition is evaluated as "or" to the following condition</span>
+		<pre>		
+		<code class="language-javascript">					
+					var re3=jq.whereOr(
+					{
+						major:{'age':'20','nSon':7},
+						equal:{'active':true}				
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult5"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		
+		
+		<span class="subTitle">6&#176; example. whereOr each condition is evaluated as "or" to the following condition:</span>
+		<pre>		
+		<code class="language-javascript">
+					var re4=jq.whereOr(
+					{
+						major:{'age':'39','nSon':10},
+						equal:{'user':'fred'}				
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult6"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		
+		<span class="subTitle">7&#176; example. Select object from json:</span>
+		<pre>		
+		<code class="language-javascript">
+					var re5=jq.select(['user','sSon']);
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult7"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		
+		<span class="subTitle">7&#176; example. Select object from json and applying where clause:</span>
+		<pre>		
+		<code class="language-javascript">
+					var re5=jq.select(['user','sSon']);
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult8"" class="language-javascript">			
+			
+		</code>
+		</pre>
+		
+		<span class="subTitle">complex json data</span>
+		<pre>		
+		<code class="language-javascript">
+						var users2 = [
+							{ "user": { "id": 100, "alias": "carol" }, "text": "good moring",name:"carol", age:20 },
+							{ "user": { "id": 130, "alias": "jon" }, "text": "bay bay",name:"jon" , age:20},
+							{ "user": { "id": 155, "alias": "maria" }, "text": "see you",name:"maria" , age:30},
+							{ "user": { "id": 301, "alias": "lucas" }, "text": "helloo ..." ,name:"lucas", age:10}
+						];
+					
+		</code>
+		</pre>	
+		
+		<span class="subTitle">Initialize object:</span>
+		<pre>		
+		<code class="language-javascript">
+			var jq2=new jsonQuery(users2);
+		</code>
+		</pre>
+		
+		
+		
+	    <span class="subTitle">8&#176; example. Select object from json:</span>
+		<pre>		
+		<code class="language-javascript">
+				var rec1=jq2.select(['user','sSon']);
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult9"" class="language-javascript">			
+			
+		</code>
+		</pre>	
+		
+		
+		<span class="subTitle">9&#176; example. Where clause:</span>
+		<pre>		
+		<code class="language-javascript">
+					var rec6=jq2.where({
+						major:{'user':{"id":100}},
+						minor:{'user':{"id":300}, age:21},				  
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult10"" class="language-javascript">			
+			
+		</code>
+		</pre>	
+	
+		<span class="subTitle">Other complex json data</span>
+		<pre>		
+		<code class="language-javascript">
+							var users3 = [
+							{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia'} }, "text": "hello" ,name:"sofia", age:10},
+							{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon'} }, "text": "bay bay",name:"jon", age:22 },
+							{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+							{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+							{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+						];
+					
+		</code>
+		</pre>	
+		
+		<span class="subTitle">Initialize object:</span>
+		<pre>		
+		<code class="language-javascript">
+				var jq3=new jsonQuery(users3);
+		</code>
+		</pre>
+	
+	
+			
+		<span class="subTitle">10&#176; example. Where clause:</span>
+		<pre>		
+		<code class="language-javascript">
+					var rec8=jq3.where({
+						major:{'user':{"id":100}},
+						minor:{'user':{"id":300,spouse:{age:40}}, age:21},
+						equal:{'user':{spouse:{name:'sofia'}}},				  
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult11"" class="language-javascript">			
+			
+		</code>
+		</pre>	
+		
+	<span class="subTitle">11&#176; example. whereOr each condition is evaluated as "or" to the following condition:</span>
+		<pre>		
+		<code class="language-javascript">
+					var rec11= jq3.whereOr(
+					{ 
+						major:{'user':{"id":101}},
+						minor:{user:{id:31,spouse:{age:91}}, age:20},				  
+					});
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult12"" class="language-javascript">			
+			
+		</code>
+		</pre>	
+
+
+
+
+</body>
+
+</html>
