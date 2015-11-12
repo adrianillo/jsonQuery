@@ -242,7 +242,15 @@ json.whereOr=function(c)
 	json.where=function(c)
 	{	
 		var me=this;
-		var data=this;
+		var data;
+		if(jQuery.isArray( this))
+		{
+			 data=this;			
+		}
+		else
+		{
+			data=[this];
+		}
 		var tQuery=null;
 		$.each(c, function( typeQuery, dataQuery )
 		{			
