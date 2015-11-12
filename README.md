@@ -112,3 +112,113 @@ var re=jq.where(
 	
 ```
 
+
+<b>3° example. Add data to json if not exist:</b>
+
+```javascript
+var re2=jq.extendData({ 'user': 'carol',  'age': 40, 'active': true , 'nSon':10},users);
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": "jon",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	},
+	{
+		"user": "susan",
+		"age": 40,
+		"active": false,
+		"nSon": 5
+	},
+	{
+		"user": "james",
+		"age": 1,
+		"active": true,
+		"nSon": 8
+	},
+	{
+		"user": "carol",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	}
+]
+	
+```
+
+
+<b>4° example. Add data to json if not exist:</b>
+
+```javascript
+var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": "jon",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	},
+	{
+		"user": "susan",
+		"age": 40,
+		"active": false,
+		"nSon": 5
+	},
+	{
+		"user": "james",
+		"age": 1,
+		"active": true,
+		"nSon": 8
+	},
+	{
+		"user": "tom",
+		"age": 41,
+		"active": true,
+		"nSon": 10
+	}
+]
+	
+```
+
+
+
+<b>5° example. whereOr each condition is evaluated as "or" to the following condition:</b>
+
+```javascript
+	var re3=jq.whereOr(
+	{
+		major:{'age':'20','nSon':7},
+		equal:{'active':true}				
+	});
+```
+<b>Result:</b>
+```json
+		
+[
+	{
+		"user": "jon",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	},
+	{
+		"user": "susan",
+		"age": 40,
+		"active": false,
+		"nSon": 5
+	},
+	{
+		"user": "james",
+		"age": 1,
+		"active": true,
+		"nSon": 8
+	}
+]
+	
+```
