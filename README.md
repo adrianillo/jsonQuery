@@ -308,7 +308,7 @@ var jq2=new jsonQuery(users2);
 <b>9° example.Select object from json:</b>
 
 ```javascript
-	var rec1=jq2.select(['user','sSon']);
+	var rec1=jq2.select(['user','name']);
 ```
 <b>Result:</b>
 ```json
