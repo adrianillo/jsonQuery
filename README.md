@@ -262,13 +262,16 @@ var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
 ```json
 [
 	{
-		"user": "jon"
+		"user": "jon",
+		"nSon": 10
 	},
 	{
-		"user": "susan"
+		"user": "susan",
+		"nSon": 5
 	},
 	{
-		"user": "james"
+		"user": "james",
+		"nSon": 8
 	}
 ]
 	
@@ -277,7 +280,7 @@ var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
 <b>8° example.Select object from json and applying where clause:</b>
 
 ```javascript
-	var re5=jq.select(['user','sSon']);
+	var re5=jq.select(['user','age']);
 ```
 <b>Result:</b>
 ```json
