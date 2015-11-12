@@ -370,3 +370,104 @@ var jq2=new jsonQuery(users2);
 	}
 ]
 ```
+<b>Other complex json data</b>
+```javascript
+var users3 = [
+		{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia'} }, "text": "hello" ,name:"sofia", age:10},
+		{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon'} }, "text": "bay bay",name:"jon", age:22 },
+		{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+		{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+		{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+];
+					
+	
+```
+
+<b>Initialize object:</b>
+```javascript
+var jq3=new jsonQuery(users3);
+```
+
+<b>11° example.Where clause:</b>
+
+```javascript
+	var rec8=jq3.where(
+	{
+		major:{'user':{"id":100}},
+		minor:{'user':{"id":300,spouse:{age:40}}, age:21},
+		equal:{'user':{spouse:{name:'sofia'}}},				  
+	});
+		
+```
+<b>Result:</b>
+```json
+	[]
+```
+
+<b>12° example.whereOr each condition is evaluated as "or" to the following condition:</b>
+
+```javascript
+	var rec11= jq3.whereOr(
+	{ 
+		major:{'user':{"id":101}},
+		minor:{user:{id:31,spouse:{age:91}}, age:20},				  
+	});
+		
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": {
+			"id": 301,
+			"alias": "sofi",
+			"spouse": {
+				"age": 50,
+				"name": "sofia"
+			}
+		},
+		"text": "hello",
+		"name": "sofia",
+		"age": 10
+	},
+	{
+		"user": {
+			"id": 130,
+			"alias": "tom",
+			"spouse": {
+				"age": 30,
+				"name": "tom"
+			}
+		},
+		"text": "bay",
+		"name": "tom",
+		"age": 20
+	},
+	{
+		"user": {
+			"id": 155,
+			"alias": "maria",
+			"spouse": {
+				"age": 40,
+				"name": "mario"
+			}
+		},
+		"text": "good bay",
+		"name": "maria",
+		"age": 30
+	},
+	{
+		"user": {
+			"id": 100,
+			"alias": "jon",
+			"spouse": {
+				"age": 90,
+				"name": "jon"
+			}
+		},
+		"text": "bay bay",
+		"name": "jon",
+		"age": 22
+	}
+]
+```
