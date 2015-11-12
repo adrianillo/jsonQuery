@@ -222,3 +222,70 @@ var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
 ]
 	
 ```
+
+
+<b>6° example. whereOr each condition is evaluated as "or" to the following condition:</b>
+
+```javascript
+		var re4=jq.whereOr(
+		{
+			major:{'age':'39','nSon':10},
+			equal:{'user':'fred'}				
+		});
+```
+<b>Result:</b>
+```json
+		
+[
+	{
+		"user": "jon",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	},
+	{
+		"user": "susan",
+		"age": 40,
+		"active": false,
+		"nSon": 5
+	}
+]
+	
+```
+
+<b>7° example.Select object from json:</b>
+
+```javascript
+	var re5=jq.select(['user','sSon']);
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": "jon"
+	},
+	{
+		"user": "susan"
+	},
+	{
+		"user": "james"
+	}
+]
+	
+```
+
+<b>8° example.Select object from json and applying where clause:</b>
+
+```javascript
+	var re5=jq.select(['user','sSon']);
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": "jon",
+		"age": 40
+	}
+]
+	
+```
