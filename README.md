@@ -280,7 +280,14 @@ var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
 <b>8° example.Select object from json and applying where clause:</b>
 
 ```javascript
-	var re5=jq.select(['user','age']);
+var re6=jq.where(
+{
+	major:{'age':'0','nSon':4},
+	equal:{'active':true},
+	minor:{'nSon':40},
+	majorOrEqual:{'nSon':10},
+	minorOrEqual:{'nSon':40},								
+}).select(['user','age']);
 ```
 <b>Result:</b>
 ```json
