@@ -2,12 +2,12 @@
 
 <h3>Getting started</h3>
 
-Add a reference to jQuery library.
+<b>Add a reference to jQuery library.</b>
 
 ```html
 <script src="js/jquery-2.1.4.min.js"></script>
 ```
-Add a reference to jsonQuery library.
+<b>Add a reference to jsonQuery library.</b>
 
 ```html
 <script src="js/jsonQuery.js"></script>
@@ -22,11 +22,11 @@ Add a reference to jsonQuery library.
 					];	
 ```
 
-Initialize object:
+<b>Initialize object:</b>
 ```javascript
 var jq=new jsonQuery(users);
 ```
-1° example. Simple where query to filter json:
+<b>1° example. Simple where query to filter json:</b>
 
 ```javascript
 var re=jq.where(
@@ -35,7 +35,7 @@ var re=jq.where(
 	equal:{'active':true}				
 });
 ```
-Result:
-```javascript
+<b>Result:</b>
+```json
 [{"user":"jon","age":40,"active":true,"nSon":10}]
 ```
