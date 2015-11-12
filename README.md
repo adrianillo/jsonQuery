@@ -12,6 +12,53 @@
 ```html
 <script src="js/jsonQuery.js"></script>
 ```
+
+<h3>Options reference</h3>
+<b>extend:</b> Add different json data
+```javascript
+myJsonObject.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
+```
+
+<b>extendData:</b> Add different json data to other json
+```javascript
+myJsonObject.extendData({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10},otherJsonObject);
+```
+
+<b>find:</b> Find elements from json data matched with the json param
+```javascript
+myJsonObject.find({name:'sofia'})
+```
+
+<b>where:</b> return data matched with the json parameter. Each condition is  evaluated as a "where (condition 1 and condition 2 and ,...)" clause.
+```javascript
+myJsonObject.where(
+{
+	major:{'age':'0','nSon':4},
+	equal:{'active':true},
+	minor:{'nSon':40},
+	majorOrEqual:{'nSon':10},
+	minorOrEqual:{'nSon':40},
+});
+```
+<b>whereOr:</b> return data matched with the json parameter. Each condition is  evaluated as a "where (condition 1 or condition 2 or ,...)" clause.
+```javascript
+myJsonObject.whereOr(
+{
+	major:{'age':'0','nSon':4},
+	equal:{'active':true},
+	minor:{'nSon':40},
+	majorOrEqual:{'nSon':10},
+	minorOrEqual:{'nSon':40},
+});
+```
+
+
+<b>select:</b>Select object from json
+```javascript
+myJsonObject.select(['user','sSon']);
+```
+
+
 <h3>Executing queries in json</h3>
 
 ```javascript
