@@ -86,3 +86,29 @@ var re=jq.where(
 ```json
 [{"user":"jon","age":40,"active":true,"nSon":10}]
 ```
+
+<b>2° example.  Where query to filter json:</b>
+
+```javascript
+	var re1=jq.where(
+	{
+		major:{'age':'0','nSon':4},
+		equal:{'active':true},
+		minor:{'nSon':40},
+		majorOrEqual:{'nSon':10},
+		minorOrEqual:{'nSon':40}
+	});
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": "jon",
+		"age": 40,
+		"active": true,
+		"nSon": 10
+	}
+]
+	
+```
+
