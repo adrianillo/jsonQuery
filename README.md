@@ -289,3 +289,84 @@ var re2_2=jq.extend({ 'user': 'tom',  'age': 41, 'active': true , 'nSon':10});
 ]
 	
 ```
+
+<b>Complex json data</b>
+```javascript
+	var users2 = [
+		{ "user": { "id": 100, "alias": "carol" }, "text": "good moring",name:"carol", age:20 },
+		{ "user": { "id": 130, "alias": "jon" }, "text": "bay bay",name:"jon" , age:20},
+		{ "user": { "id": 155, "alias": "maria" }, "text": "see you",name:"maria" , age:30},
+		{ "user": { "id": 301, "alias": "lucas" }, "text": "helloo ..." ,name:"lucas", age:10}
+	];
+	
+```
+<b>Initialize object:</b>
+```javascript
+var jq2=new jsonQuery(users2);
+```
+
+<b>9° example.Select object from json:</b>
+
+```javascript
+	var rec1=jq2.select(['user','sSon']);
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": {
+			"id": 100,
+			"alias": "carol"
+		},
+		"name": "carol"
+	},
+	{
+		"user": {
+			"id": 130,
+			"alias": "jon"
+		},
+		"name": "jon"
+	},
+	{
+		"user": {
+			"id": 155,
+			"alias": "maria"
+		},
+		"name": "maria"
+	},
+	{
+		"user": {
+			"id": 301,
+			"alias": "lucas"
+		},
+		"name": "lucas"
+	}
+]
+	
+```
+
+<b>10° example.Where clause:</b>
+
+```javascript
+	var rec6=jq2.where(
+	{
+		major:{'user':{"id":100}},
+		minor:{'user':{"id":300}, age:21},				  
+	});
+		
+```
+<b>Result:</b>
+```json
+			
+[
+	{
+		"user": {
+			"id": 130,
+			"alias": "jon"
+		},
+		"text": "bay bay",
+		"name": "jon",
+		"age": 20
+	}
+]
+```
