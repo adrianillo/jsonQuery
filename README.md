@@ -481,3 +481,140 @@ var jq3=new jsonQuery(users3);
 	}
 ]
 ```
+<b>Other complex json data</b>
+```javascript
+var users4 = [
+		{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia'} }, "text": "hello" ,name:"sofia", age:10},
+		{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon'} }, "text": "bay bay",name:"jon", age:22 },
+		{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+		{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+		{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+];
+<b>Initialize object:</b>
+```javascript
+var jq4=new jsonQuery(users4);
+```
+<b>13° example: Complex Select:</b>
+
+```javascript
+var rec16=jq4.select([{'user':["id","alias",{spouse:['name']}]}]);	
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": {
+			"id": 301,
+			"alias": "sofi",
+			"spouse": {
+				"name": "sofia"
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 100,
+			"alias": "jon",
+			"spouse": {
+				"name": "jon"
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 101,
+			"alias": "carol",
+			"spouse": {
+				"name": "carol"
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 130,
+			"alias": "tom",
+			"spouse": {
+				"name": "tom"
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 155,
+			"alias": "maria",
+			"spouse": {
+				"name": "mario"
+			}
+		}
+	}
+]
+```
+
+<b>14° example: More Complex Select:</b>
+
+```javascript
+rec17=jq4.select([{'user':["id","alias",{spouse:['name','age',{parent:["fatherName","fatherAge"]}]}]}]);
+```
+<b>Result:</b>
+```json
+[
+	{
+		"user": {
+			"id": 301,
+			"alias": "sofi",
+			"spouse": {
+				"name": "sofia",
+				"age": 50,
+				"parent": {
+					"fatherName": "julio",
+					"fatherAge": 60
+				}
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 100,
+			"alias": "jon",
+			"spouse": {
+				"name": "jon",
+				"age": 90,
+				"parent": {
+					"fatherName": "bart",
+					"fatherAge": 69
+				}
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 101,
+			"alias": "carol",
+			"spouse": {
+				"name": "carol",
+				"age": 91
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 130,
+			"alias": "tom",
+			"spouse": {
+				"name": "tom",
+				"age": 30
+			}
+		}
+	},
+	{
+		"user": {
+			"id": 155,
+			"alias": "maria",
+			"spouse": {
+				"name": "mario",
+				"age": 40
+			}
+		}
+	}
+]
+```
