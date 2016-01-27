@@ -54,14 +54,14 @@
 					//whereOr each condition is evaluated as "or" to the following condition , filter json
 					var re3=jq.whereOr(
 						{
-						major:{'age':'20','nSon':7},
+						major:{'age':20,'nSon':7},
 						equal:{'active':true}				
 					});
 					
 					$('#contentResult5').html(JSON.stringify(re3, null, "\t"));
 					
 					//whereOr each condition is evaluated as "or" to the following condition , filter json
-					var re4=jq.whereOr({major:{'age':'39','nSon':10},
+					var re4=jq.whereOr({major:{'age':39,'nSon':10},
 					equal:{'user':'fred'}				
 					});
 					
@@ -75,7 +75,7 @@
 					
 					//Select object from json
 					var re6=jq.where({
-					major:{'age':'0','nSon':4},
+					major:{'age':0,'nSon':4},
 					equal:{'active':true},
 					minor:{'nSon':40},
 					majorOrEqual:{'nSon':10},
@@ -105,10 +105,10 @@
 				$('#contentResult9').html(JSON.stringify(rec2, null, "\t"));
 				
 				//where, filter json
-				var rec3=jq2.where({equal:{'age':'20'}});				
+				var rec3=jq2.where({equal:{'age':20}});				
 				
 				//where, filter json	  
-				var rec4=jq2.where({equal:{'age':'20'}});
+				var rec4=jq2.where({equal:{'age':20}});
 				
 				//where, filter json
 				var rec5=jq2.where({equal:{'user':{"id":100}}});			  
@@ -184,7 +184,33 @@
 					});
 					
 					
-				  });
+					var aaa={id: 301, alias: "sofi", spouse: {name:'pepa',age:22}};
+					var aa=new jsonQuery(aaa);
+					var ee=aa.select(["id","alias"]);
+					var rec15=jq3.select([{'user':["id","alias"]}]);
+					
+					
+					
+					var users4 = [
+							{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia',parent:{fatherName:'julio',motherName:'julia',fatherAge:60,motherAge:58}} }, "text": "hello" ,name:"sofia", age:10},
+							{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon',parent:{fatherName:'bart',motherName:'mary',fatherAge:69, motherAge:70} }}, "text": "bay bay",name:"jon", age:22 },
+							{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+							{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+							{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+						];
+				//initialize object		
+				var jq4=new jsonQuery(users4);
+				//Complex Select	
+				var rec16=jq4.select([{'user':["id","alias",{spouse:['name']}]}]);	
+					
+				$('#contentResult13').html(JSON.stringify(rec16, null, "\t"));
+					
+				//More Complex Select					
+				 rec17=jq4.select([{'user':["id","alias",{spouse:['name','age',{parent:["fatherName","fatherAge"]}]}]}]);
+					
+				$('#contentResult14').html(JSON.stringify(rec17, null, "\t"));
+					
+			});
 	</script>
 
 </head>
@@ -211,7 +237,7 @@
 		<span class="subTitle">1&#176; example. Simple where query to filter json:</span>
 		<pre>		
 		<code class="language-javascript">			
-			var re=jq.where({major:{'age':'20','nSon':7},
+			var re=jq.where({major:{'age':20,'nSon':7},
 				equal:{'active':true}				
 				});
 		</code>
@@ -228,7 +254,7 @@
 		<pre>		
 		<code class="language-javascript">			
 			var re1=jq.where({
-					major:{'age':'0','nSon':4},
+					major:{'age':0,'nSon':4},
 					equal:{'active':true},
 					minor:{'nSon':40},
 					majorOrEqual:{'nSon':10},
@@ -280,7 +306,7 @@
 		<code class="language-javascript">					
 					var re3=jq.whereOr(
 					{
-						major:{'age':'20','nSon':7},
+						major:{'age':20,'nSon':7},
 						equal:{'active':true}				
 					});
 		</code>
@@ -300,7 +326,7 @@
 		<code class="language-javascript">
 					var re4=jq.whereOr(
 					{
-						major:{'age':'39','nSon':10},
+						major:{'age':39,'nSon':10},
 						equal:{'user':'fred'}				
 					});
 		</code>
@@ -334,7 +360,7 @@
 		<code class="language-javascript">
 					var re6=jq.where(
 					{
-						major:{'age':'0','nSon':4},
+						major:{'age':0,'nSon':4},
 						equal:{'active':true},
 						minor:{'nSon':40},
 						majorOrEqual:{'nSon':10},
@@ -434,7 +460,9 @@
 						major:{'user':{"id":100}},
 						minor:{'user':{"id":300,spouse:{age:40}}, age:21},
 						equal:{'user':{spouse:{name:'sofia'}}},				  
-					});
+					});				
+					
+					
 		</code>
 		</pre>
 		
@@ -464,6 +492,56 @@
 		</pre>	
 
 
+
+<span class="subTitle">Other more complex json data</span>
+		<pre>		
+		<code class="language-javascript">
+						var users4 = [
+							{ "user": { "id": 301, "alias": "sofi",spouse:{age:50, name:'sofia',parent:{fatherName:'julio',motherName:'julia',fatherAge:60,motherAge:58}} }, "text": "hello" ,name:"sofia", age:10},
+							{ "user": { "id": 100, "alias": "jon",spouse:{age:90, name:'jon',parent:{fatherName:'bart',motherName:'mary',fatherAge:69, motherAge:70} }}, "text": "bay bay",name:"jon", age:22 },
+							{ "user": { "id": 101, "alias": "carol",spouse:{age:91, name:'carol'} }, "text": "see you",name:"carol", age:22 },
+							{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
+							{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
+						];
+					
+		</code>
+		</pre>	
+		<span class="subTitle">Initialize object:</span>
+		<pre>		
+		<code class="language-javascript">
+				var jq4=new jsonQuery(users4);
+		</code>
+		</pre>
+
+
+		<span class="subTitle">11&#176; example. Complex Select:</span>
+		<pre>		
+		<code class="language-javascript">
+				var rec16=jq4.select([{'user':["id","alias",{spouse:['name']}]}]);	
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult13"" class="language-javascript">			
+			
+		</code>
+		</pre>	
+		
+		
+		<span class="subTitle">12&#176; example.More Complex Select:</span>
+		<pre>		
+		<code class="language-javascript">
+				rec17=jq4.select([{'user':["id","alias",{spouse:['name','age',{parent:["fatherName","fatherAge"]}]}]}]);	
+		</code>
+		</pre>
+		
+		<span class="subTitle">Result:</span>		
+		<pre>		
+		<code id="contentResult14"" class="language-javascript">			
+			
+		</code>
+		</pre>	
 
 
 </body>

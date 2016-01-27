@@ -281,27 +281,92 @@ json.whereOr=function(c)
 		return new jsonQuery(data);			
 	};
 	
-	//return select data in  array parameter from json 
-	json.select=function(c)
+	//return select data in  array parameter from json
+     json.select=function(c)
 	{
 		var result=[];
 		var me=this;
+		var isArray=true;
+		if(!$.isArray(this))
+		{
+			isArray=false;
+			me=[];
+			me.push(this);	
+		}
+		
 		$.each(me, function( i, data )
 		{
 			var row={};			
-			for (var j=0;j<=c.length;j++)
+			for (var j=0;j<c.length;j++)
 			{
-				var currentField=data[c[j]];
-				if(currentField)
+				var o=c[j];				
+				if($.isPlainObject(o))
 				{
-					row[c[j]]=currentField;
+					keys=Object.keys(o);
+					for(var y=0;y<keys.length;y++)
+					{
+						var currentField=keys[y];					
+						var subkeys=[];
+						subkeys.push(o[currentField]);		
+						if(data[currentField])
+						{			
+							var selectResult=	new jsonQuery( data[currentField]).select(subkeys);							
+							row[currentField]=selectResult;
+													
+						}
+					}
+					
+				}
+				else
+				{
+					if ($.isPlainObject(o)) 
+					{
+						var currentField=data[o];
+						if(currentField)
+						{
+							row[o]=currentField;
+						}
+					}
+					else
+					{
+						if($.isArray(o))
+						{
+							for(var p=0;p<o.length;p++)
+							{
+								if($.isPlainObject(o[p]))
+								{
+									var fields=Object.keys(o[p]);
+									for(var z=0;z<fields.length;z++)
+									{
+										var sf=[];
+										for(yy=0;yy<o[p][fields[z]].length;yy++)
+										{
+											sf.push(o[p][fields[z]][yy]);
+										}										
+										
+										row[fields[z]]=new jsonQuery(data[fields[z]]).select(sf);
+									}
+								}
+								else{								
+									row[o[p]]=data[o[p]];
+								}	
+							}
+						}
+						else
+						{
+							row[o]=data[o];
+						}
+					}
 				}
 			}
 			result.push(row);			
 		});	
+		if(!isArray)
+		{
+			return result[0];
+		}
 		return result;	
 	};
-	 
 	
 	return json;
 }
