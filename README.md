@@ -490,7 +490,9 @@ var users4 = [
 		{ "user": { "id": 130, "alias": "tom",spouse:{age:30, name:'tom'} }, "text": "bay",name:"tom" , age:20},
 		{ "user": { "id": 155, "alias": "maria",spouse:{age:40, name:'mario'} }, "text": "good bay",name:"maria" , age:30}					  
 ];
+```
 <b>Initialize object:</b>
+
 ```javascript
 var jq4=new jsonQuery(users4);
 ```
